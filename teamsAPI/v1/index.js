@@ -32,6 +32,7 @@ app.post(BASE_API_PATH+"/teams", (req,res)=>{
             res.sendStatus(500);
         }else{
             res.statusCode=201;
+            delete newTeam._id
             res.send(newTeam);
         }
     });
