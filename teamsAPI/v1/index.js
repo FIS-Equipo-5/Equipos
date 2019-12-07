@@ -14,7 +14,10 @@ app.get(BASE_API_PATH + "/teams", (req,res)=>{
             res.sendStatus(500);
         }else{
             res.statusCode=200;
-            res.send(teams);
+            res.send(teams.map((team)=>{
+                delete team._id;
+                return team;
+            }));
         }
     });    
 });
