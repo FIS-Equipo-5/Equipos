@@ -1,5 +1,6 @@
 var express = require('express');
 var bodyParser = require('body-parser');
+var DataStore = require('nedb');
 
 var port = (process.env.PORT || 3000);
 
@@ -7,14 +8,16 @@ console.log("Starting API server...");
 
 var app = express();
 app.use(bodyParser.json());
-//var BASE_API_PATH="/api/v1";
 
 
 /*Creamos variables para la ejecución de la API*/
 var teamsAPI = require('./teamsAPI/v1');
 
+/*Creamos el fichero donde se almacenarán los equipos*/
+var DB_TEAM_FILE_NAME = __dirname + "/teams.json";
+var teamDB = new DataStore({ filename: DB_TEAM_FILE_NAME, autoload: true });
 
-
+/*
 var teams = [
 
     {
@@ -45,9 +48,10 @@ var teams = [
     }
 
 ];
+*/
 
 /*Ejecución de teamsAPI*/
-teamsAPI.register(app,teams);
+teamsAPI.register(app,teamDB);
 
 
 
