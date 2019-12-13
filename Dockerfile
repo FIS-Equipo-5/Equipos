@@ -6,7 +6,8 @@ COPY package-lock.json .
 
 RUN npm install
 
-COPY index.js /home/balta/Documentos/Máster/Asignaturas/FIS/Proyecto/teams/teamsAPI/v1/
+COPY teamsAPI ./teamsAPI
+COPY playersAPI ./playersAPI
 COPY index.js .
 
 EXPOSE 3000
