@@ -1,5 +1,5 @@
 sudo: required
-languaje: node_js
+language: node_js
 node_js:
   - "9"
 services:
@@ -12,7 +12,7 @@ script:
   - docker build -t teams .
 deploy:
   provider: script
-  skip_cleanup: true
+  cleanup: true
   script:
     heroku container:login;
     heorku container:push web -a $HEROKU_APP_NAME;
