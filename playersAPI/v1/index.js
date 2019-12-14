@@ -18,8 +18,8 @@ playersAPI.register = function (app, playerDB, teamBD) {
         });
     });
 
-    app.post(BASE_API_PATH + '/player', (req, res) => {
-        console.log('-------> POST /player');
+    app.post(BASE_API_PATH + '/players', (req, res) => {
+        console.log('-------> POST /players');
         var player = req.body;
         if (validatePlayer(player, true)) {
             playerDB.insert(player, (err, newPlayer) => {
@@ -120,24 +120,6 @@ playersAPI.register = function (app, playerDB, teamBD) {
         }
     });
 
-    app.get(BASE_API_PATH + '/players/team', (req, res) => {
-        console.log('-------> GET /players/team');
-        var team_id = req.query.team_id;
-        if (!team_id) {
-            res.send(400);
-        } else {
-            playerDB.find({ team_id: team_id }, function (err, data) {
-                if (err) {
-                    console.log(Date() + " - " + err);
-                    res.sendStatus(500);
-                } else {
-                    res.statusCode = 200;
-                    res.send(data);
-                }
-            });
-        }
-    });
-
     app.put(BASE_API_PATH + '/player/goals', (req, res) => {
         console.log('-------> PUT /player/goals');
         var uuid = req.body.uuid;
@@ -231,12 +213,12 @@ playersAPI.register = function (app, playerDB, teamBD) {
         if(!uuid){
             res.sendStatus(400);
         }else{
-            playerDB.find({uuid : uuid}, function (err, player) {
+            playerDB.findOne({uuid : uuid}, function (err, player) {
                 if (err) {
                     console.log(Date() + " - " + err);
                     res.sendStatus(500);
                 } else {
-                    teamBD.find({uuid : player.team_id}, function (err, team) {
+                    teamBD.findOne({team_id : player.team_id}, function (err, team) {
                         if (err) {
                             console.log(Date() + " - " + err);
                             res.sendStatus(500);
@@ -250,14 +232,6 @@ playersAPI.register = function (app, playerDB, teamBD) {
             });
         }
     });
-
-
-
-
-
-
-
-
 }
 
 
