@@ -1,8 +1,6 @@
 var teamsAPI={};
 var BASE_API_PATH="/api/v1";
 
-module.exports = teamsAPI;
-
 teamsAPI.register = function(app, teamDB){
 
 // GET - /teams 
@@ -54,3 +52,6 @@ app.delete(BASE_API_PATH+"/teams", (req,res)=>{
 
 
 }
+
+/*Expotamos la API de equipos*/
+module.exports = teamsAPI;
