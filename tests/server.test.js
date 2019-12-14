@@ -2,10 +2,21 @@ const app = require('../server.js');
 const db = require('../db.js');
 const request = require('supertest');
 
-describe("Teams API", () => {
+describe("Hello world tests", ()=>{
 
-    describe("GET /teams", () => {
-        beforeAll(() => {
+    it("Should do a stupid test", ()=>{
+        const a = 5;
+        const b = 3;
+        const sum = a + b;
+
+        expect(sum).toBe(8);
+    });
+});
+
+describe("Teams API", ()=>{
+
+    describe("GET /teams", ()=>{
+        beforeAll(()=>{
             const teams = [
 
                 {
@@ -36,14 +47,14 @@ describe("Teams API", () => {
                 }
             ];
 
-            dbFind = jest.spyOn(db.teamDB, "find");
-            dbFind.mockImplementation((query, callback) => {
+            dbFind = jest.spyOn(db.teamDB,"find");
+            dbFind.mockImplementation((query, callback)=>{
                 callback(null, teams);
             });
         });
 
-        it("Sould return all the teams that are stored in our database", () => {
-            return request(app).get("/api/v1/teams").then((response) => {
+        it("Sould return all the teams that are stored in our database", () =>{
+            return request(app).get("/api/v1/teams").then((response)=>{
                 expect(response.statusCode).toBe(200);
                 expect(response.body).toBeArrayOfSize(2);
                 expect(dbFind).toBeCalledWith({}, expect.any(Function));
@@ -52,7 +63,7 @@ describe("Teams API", () => {
     });
 
 
-    describe("POST /teams", () => {
+    describe("POST /teams", () =>{
 
         const team = {
             "team_id": 1,
@@ -69,27 +80,27 @@ describe("Teams API", () => {
         };
         let dbInsert;
 
-        beforeEach(() => {
-            dbInsert = jest.spyOn(db.teamDB, "insert");
+        beforeEach(() =>{
+            dbInsert = jest.spyOn(db.teamDB,"insert");
         });
 
-        it("Should add a new team is everything is fine", () => {
+        it("Should add a new team is everything is fine", ()=>{
 
-            dbInsert.mockImplementation((t, callback) => {
-                callback(false, t);
+            dbInsert.mockImplementation((t, callback)=>{
+                callback(false,t);
             });
-            return request(app).post("/api/v1/teams").send(team).then((response) => {
+            return request(app).post("/api/v1/teams").send(team).then((response)=>{
                 expect(response.statusCode).toBe(201);
                 expect(dbInsert).toBeCalledWith(team, expect.any(Function));
             });
         });
 
-        it("Shoud return 500 if there is some problem with the DB", () => {
+        it("Shoud return 500 if there is some problem with the DB", ()=>{
 
-            dbInsert.mockImplementation((t, callback) => {
-                callback(true, null);
+            dbInsert.mockImplementation((t, callback)=>{
+                callback(true,null);
             });
-            return request(app).post("/api/v1/teams").send(team).then((response) => {
+            return request(app).post("/api/v1/teams").send(team).then((response)=>{
                 expect(response.statusCode).toBe(500);
                 expect(dbInsert).toBeCalledWith(team, expect.any(Function));
             });
@@ -97,7 +108,12 @@ describe("Teams API", () => {
         });
 
     });
+
 });
+
+const app = require('../server.js');
+const db = require('../db.js');
+const request = require('supertest');
 
 
 describe("Players API", () => {
