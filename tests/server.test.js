@@ -111,9 +111,6 @@ describe("Teams API", ()=>{
 
 });
 
-const app = require('../server.js');
-const db = require('../db.js');
-const request = require('supertest');
 
 
 describe("Players API", () => {
