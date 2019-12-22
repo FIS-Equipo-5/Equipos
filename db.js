@@ -1,10 +1,10 @@
-var DataStore = require('nedb');
+const monggose = require('mongoose');
+const DB_URL = (process.env.MONGO_URL || 'mongodb://mongo/test');
 
-/*Base de datos de equipos*/
-var DB_TEAM_FILE_NAME = __dirname + "/teams.json";
-var teamDB = new DataStore({ filename: DB_TEAM_FILE_NAME, autoload: true });
-/*Base de datos de jugadores*/
-var DB_PLAYER_FILE_NAME = __dirname + "/players.json";
-var playerDB = new DataStore({ filename: DB_PLAYER_FILE_NAME, autoload: true });
+const dbConnect = function () {
+    const db = monggose.connection;
+    db.on('error', console.error.bind(console, 'connection error: '));
+    return monggose.connect(DB_URL, {useNewUrlParser: true, useUnifiedTopology: true});
+}
 
-module.exports = {teamDB, playerDB};
+module.exports = dbConnect;
