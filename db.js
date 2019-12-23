@@ -1,10 +1,14 @@
-var DataStore = require('nedb');
+const mongoose = require('mongoose'); 
+//Conexión a la base dee datos
+const DB_URL = (process.env.port || 'mongodb://mongo/test');
 
-/*Base de datos de equipos*/
-var DB_TEAM_FILE_NAME = __dirname + "/teams.json";
-var teamDB = new DataStore({ filename: DB_TEAM_FILE_NAME, autoload: true });
-/*Base de datos de jugadores*/
-var DB_PLAYER_FILE_NAME = __dirname + "/players.json";
-var playerDB = new DataStore({ filename: DB_PLAYER_FILE_NAME, autoload: true });
+//Función de conexión a la base de datos
+const dbConnect = function(){
+    const db = mongoose.connection;
+    //sistema para la gestión de errores (redirección a consola)
+    db.on('error', console.error.bind(console, 'connection error: '));
+    //parámetro de conexión
+    return mongoose.connect(DB_URL, {useNewUrlParser: true});
+};
 
-module.exports = {teamDB, playerDB};
+module.exports = dbConnect;
