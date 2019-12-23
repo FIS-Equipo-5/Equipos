@@ -1,9 +1,9 @@
 const app = require('./server.js');
-const dbConnect = require('./db');
+const dbConnect = require('./db.js');
 
 var port = (process.env.PORT || 3000);
 
-console.log("Starting API server...");
+console.log("Starting API server at " + port);
 
 dbConnect().then(
     () => {
@@ -13,4 +13,5 @@ dbConnect().then(
     err => {
         console.log("Connection error: " + err);
     }
-)
+);
+
