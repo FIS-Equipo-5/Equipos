@@ -1,4 +1,4 @@
-const Team = require('../module/teams.js');
+const Team = require('../module/teams');
 const teamsAPI={};
 const BASE_API_PATH="/api/v1";
 
