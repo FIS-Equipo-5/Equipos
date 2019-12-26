@@ -84,11 +84,11 @@ app.post(BASE_API_PATH+"/teams", (req,res)=>{
                 });
             }else{
                 console.log("The team already exist");
-                res.status(400).json({error: "There is a team with the same id, name or code"});
+                res.status(400).json({err: "There is a team with the same id, name or code"});
             }
         });
     }else{
-        res.status(400).json({error: message});
+        res.status(400).json({err: message});
     }
     
 });
@@ -136,8 +136,11 @@ app.put(BASE_API_PATH + "/teams/:team_name", (req,res)=>{
     var message = validateTeam(updatedTeam);
     if(message === ""){
         Team.findOne({name: teamName}, (err,team)=>{
-            if(updatedTeam.team_id !== team.team_id || updatedTeam.name !== team.name || updatedTeam.code != team.code){
-                res.status(400).json({error: "The updated team must have the same id, name and code"});
+            if(err){
+                console.log(Date()+" - "+ err);
+                res.sendStatus(500);
+            }else if(team!==null && (updatedTeam.team_id !== team.team_id || updatedTeam.name !== team.name || updatedTeam.code != team.code)){
+                res.status(400).json({err: "The updated team must have the same id, name and code"});
             }else{
                 Team.updateOne({name: teamName},updatedTeam, (err, result)=>{
                     if(err){
@@ -152,7 +155,7 @@ app.put(BASE_API_PATH + "/teams/:team_name", (req,res)=>{
             }
         });
     }else{
-        res.status(400).json({error: message});
+        res.status(400).json({err: message});
     }
 });
 
