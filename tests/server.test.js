@@ -2,6 +2,7 @@ const app = require('../server.js');
 const db = require('../db.js'); /////////// NONO BORRA ESTA LÍNEA CUANDO ADAPTES LOS TEST A MONGO
 const Team = require('../teamsAPI/module/teams');
 const request = require('supertest');
+const ApiKey = require('../authentication/apikey/apikeys');
 
 describe("Hello world tests", ()=>{
 
@@ -50,14 +51,20 @@ describe("Teams API", ()=>{
                      "venue_capacity": 63000
                  })
              ];
+            const user = new ApiKey({user: "prueba", apikey: "1"});
             dbFind = jest.spyOn(Team,"find");
             dbFind.mockImplementation((query, callback)=>{
                 callback(null, teams);
             });
-            return request(app).get("/api/v1/teams").then((response)=>{
+            auth = jest.spyOn(ApiKey, "findOne");
+            auth.mockImplementation((query, callback)=>{
+                callback(false, user);
+            });
+            return request(app).get("/api/v1/teams").set('apikey', '1').then((response)=>{
                 expect(response.statusCode).toBe(200);
                 expect(response.body).toBeArrayOfSize(2);
                 expect(dbFind).toBeCalledWith({}, expect.any(Function));
+                expect(auth).toBeCalledWith({apikey: '1'}, expect.any(Function));
             });
         });
     });

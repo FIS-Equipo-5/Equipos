@@ -39,10 +39,10 @@ var teams = [
 ];
 */
 
-teamsAPI.register = function(app){
+teamsAPI.register = function(app, passport){
 
 // GET - /teams 
-app.get(BASE_API_PATH + "/teams", (req,res)=>{
+app.get(BASE_API_PATH + "/teams", passport.authenticate('localapikey', {session: false}), (req,res)=>{
     console.log(Date()+" - GET /teams");
     Team.find({},(err,teams)=>{
         if(err){
