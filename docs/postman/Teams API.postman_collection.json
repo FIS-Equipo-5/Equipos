@@ -1,0 +1,280 @@
+{
+	"info": {
+		"_postman_id": "9b241f7e-9200-405b-9fb6-169bd938c33f",
+		"name": "Teams API",
+		"description": "Teams API for FIS2019-2020 proyect",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GET /teams",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/v1/teams?apikey=01e68d0b-48d4-4c52-bb11-31b16fd8e66c",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"teams"
+					],
+					"query": [
+						{
+							"key": "apikey",
+							"value": "01e68d0b-48d4-4c52-bb11-31b16fd8e66c"
+						}
+					]
+				},
+				"description": "Returns all the teams that exist in our database."
+			},
+			"response": []
+		},
+		{
+			"name": "POST /teams",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n                \"team_id\": 1313,\n                \"name\": \"prueba\",\n                \"code\": \"777\",\n                \"logo\": \"https://media.api-football.com/teams/541.png\",\n                \"country\": \"Spain\",\n                \"founded\": 1909,\n                \"venue_name\": \"Estadio Benito Villamarín\",\n                \"venue_surface\": \"polvoraaa\",\n                \"venue_address\": \"Avenida de Concha Espina 1, Chamartín\",\n                \"venue_city\": \"Sevilla\",\n                \"venue_capacity\": 85454,\n                \"budget\": 14423432,\n                \"value\": 9999999999\n                }\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/v1/teams",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"teams"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE /teams",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/v1/teams",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"teams"
+					]
+				},
+				"description": "Eliminar TODOS los equipos."
+			},
+			"response": []
+		},
+		{
+			"name": "POST /teams Copy",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n                \"team_id\": 1313,\n                \"name\": \"prueba\",\n                \"code\": \"777\",\n                \"logo\": \"https://media.api-football.com/teams/541.png\",\n                \"country\": \"Spain\",\n                \"founded\": 1909,\n                \"venue_name\": \"Estadio Benito Villamarín\",\n                \"venue_surface\": \"polvoraaa\",\n                \"venue_address\": \"Avenida de Concha Espina 1, Chamartín\",\n                \"venue_city\": \"Sevilla\",\n                \"venue_capacity\": 85454,\n                \"budget\": 14423432,\n                \"value\": 9999999999\n                }\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/v1/teams",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"teams"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET /team/{team_name}",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/v1/teams/prueba",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"teams",
+						"prueba"
+					]
+				},
+				"description": "Returns the info of the team."
+			},
+			"response": []
+		},
+		{
+			"name": "PUT /team/{team_name}",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"team_id\": 1313,\n        \"name\": \"prueba\",\n        \"code\": \"777\",\n        \"logo\": \"https://media.api-football.com/teams/541.png\",\n        \"country\": \"Spain\",\n        \"founded\": 1909,\n        \"venue_name\": \"Estadio Benito Villamarín\",\n        \"venue_surface\": \"polvoraaa\",\n        \"venue_address\": \"Avenida de Concha Espina 1, Chamartín\",\n        \"venue_city\": \"Sevilla\",\n        \"venue_capacity\": 85454,\n        \"budget\": 14423432,\n        \"value\": 66\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/v1/teams/prueba",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"teams",
+						"prueba"
+					]
+				},
+				"description": "Returns the team modificated"
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE /team/{team_name}",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/v1/teams/prueba",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"teams",
+						"prueba"
+					]
+				},
+				"description": "Remove the team"
+			},
+			"response": []
+		},
+		{
+			"name": "POST /teams Copy Copy",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n                \"team_id\": 1313,\n                \"name\": \"prueba\",\n                \"code\": \"777\",\n                \"logo\": \"https://media.api-football.com/teams/541.png\",\n                \"country\": \"Spain\",\n                \"founded\": 1909,\n                \"venue_name\": \"Estadio Benito Villamarín\",\n                \"venue_surface\": \"polvoraaa\",\n                \"venue_address\": \"Avenida de Concha Espina 1, Chamartín\",\n                \"venue_city\": \"Sevilla\",\n                \"venue_capacity\": 85454,\n                \"budget\": 14423432,\n                \"value\": 9999999999\n                }\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/v1/teams",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"teams"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET /teams/team/{team_id}",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/v1/teams/team/1313",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"teams",
+						"team",
+						"1313"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
