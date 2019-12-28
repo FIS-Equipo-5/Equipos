@@ -1,6 +1,6 @@
 const mongoose = require('mongoose'); 
 //Conexión a la base dee datos
-const DB_URL = (process.env.MONGO_URL || 'mongodb://mongo/test');
+const DB_URL = (process.env.MONGO_URL || 'mongodb://localhost:27017/teamsDB');
 
 //Función de conexión a la base de datos
 const dbConnect = function(){
