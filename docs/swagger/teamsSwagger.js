@@ -14,7 +14,7 @@
  * @property {number} budget.required - Team budget 
  * @property {number} value.required - Team value 
  */
-
+ 
 /**
  * This function comment is parsed by doctrine
  * @route GET /teams
