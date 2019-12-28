@@ -118,6 +118,7 @@ app.get(BASE_API_PATH + "/teams/:team_name", (req,res)=>{
             console.log(Date()+" - "+ err);
             res.sendStatus(500);
         }else if(team === null){
+            console.log("Team does not exist");
             res.sendStatus(404);
         }else{
             var requestedTeam = team.cleanup();
