@@ -14,7 +14,7 @@ script:
   - docker build -t teams .
 deploy:
   provider: script
-  cleanup: true
+  skip_cleanup: true
   script:
     heroku container:login;
     heorku container:push web -a $HEROKU_APP_NAME;
