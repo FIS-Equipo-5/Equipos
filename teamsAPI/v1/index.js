@@ -176,7 +176,7 @@ app.delete(BASE_API_PATH+"/teams/:team_name", (req,res)=>{
 });
 
 
-//GET - /teams/{team_id} --> Integrations
+//GET - /teams/team/{team_id} --> Integrations
 app.get(BASE_API_PATH + "/teams/team/:team_id", (req,res)=>{
     var teamId = req.params.team_id;
     console.log(Date()+" GET /teams/team/"+teamId);
