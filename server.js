@@ -1,14 +1,35 @@
-var express = require('express');
-var bodyParser = require('body-parser');
+const express = require('express');
+const bodyParser = require('body-parser');
+var jwt = require('jsonwebtoken');
 
 const Player = require('./playersAPI/model/players');
 /*Creamos variables para la ejecución de la API teams*/
-var teamsAPI = require('./teamsAPI/v1/index');
+const teamsAPI = require('./teamsAPI/v1/index');
 /*Creamos variables para la ejecución de la API teams*/
 var playersAPI = require('./playersAPI/v1/index');
 
 var app = express();
 app.use(bodyParser.json());
+
+/*jwt secret token*/
+app.set('secretKey', 'authServiceApi'); 
+
+//jwt token is checked for all our routes
+app.use('/', validateUser);
+
+//Function that validates jwt token
+function validateUser(req, res, next) {
+    jwt.verify(req.headers['x-access-token'], req.app.get('secretKey'), function(err, decoded) {
+      if (err) {
+        res.json({status:"error", message: err.message, data:null});
+      }else{
+        // add user id to request
+        req.body.userId = decoded.id;
+        next();
+      }
+    });
+    
+  }
 
 /*Ejecución de teamsAPI*/
 teamsAPI.register(app);
