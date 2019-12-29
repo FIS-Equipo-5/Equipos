@@ -15,7 +15,7 @@ app.use(bodyParser.json());
 app.set('secretKey', 'authServiceApi'); 
 
 //jwt token is checked for all our routes
-app.use('/', validateUser);
+//app.use('/', validateUser);
 
 //Function that validates jwt token
 function validateUser(req, res, next) {
