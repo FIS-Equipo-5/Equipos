@@ -8,6 +8,6 @@ const dbConnect = function(){
     //sistema para la gestión de errores (redirección a consola)
     db.on('error', console.error.bind(console, 'connection error: '));
     //parámetro de conexión
-    return mongoose.connect(DB_URL, {useNewUrlParser: true});
+    return mongoose.connect(DB_URL, {useNewUrlParser: true, useUnifiedTopology: true});
 };
 module.exports = dbConnect;
