@@ -77,7 +77,7 @@ describe('Teams DB connection', () =>{
     });
 
 
-    it('Return the searched team ', (done)=>{
+    it('Returns the searched team ', (done)=>{
         const team = new Team(
             {
                 "team_id": 1312,
@@ -106,7 +106,7 @@ describe('Teams DB connection', () =>{
     });
 
 
-    it('Udates a team ', (done)=>{
+    it('Updates a team ', (done)=>{
         const team = new Team(
             {
                 "team_id": 1312,
