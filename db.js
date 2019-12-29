@@ -1,5 +1,5 @@
 const mongoose = require('mongoose'); 
-//Conexión a la base dee datos
+//Conexión a la base de datos (mongo-atlas | default-local)
 const DB_URL = (process.env.MONGO_URL || 'mongodb://mongo/test');
 
 //Función de conexión a la base de datos
