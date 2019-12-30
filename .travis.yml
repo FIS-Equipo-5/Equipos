@@ -12,6 +12,8 @@ install:
 script:
   - npm test
   - docker build -t teams .
+env:
+  - MONGO_URL=mongodb+srv://admin:fis2019@cluster0-hcmr4.mongodb.net/teams?retryWrites=true&w=majority
 deploy:
   provider: script
   skip_cleanup: true
