@@ -1,5 +1,5 @@
 const app = require('../server.js');
-const Team = require('../teamsAPI/module/teams');
+const Team = require('../teamsAPI/model/teams');
 const Player = require('../playersAPI/model/players');
 const request = require('supertest');
 

@@ -1,5 +1,6 @@
 const Player = require('../model/players');
-const Team = require('../../teamsAPI/module/teams');
+const Team = require('../../teamsAPI/model/teams');
+const TeamResource = require('../../integrations/TeamsResource');
 var playersAPI = {};
 var BASE_API_PATH = "/api/v1";
 
@@ -189,9 +190,9 @@ playersAPI.register = function (app) {
         }
     });
 
-    app.get(BASE_API_PATH + '/player/all', (req, res) => {
+    app.get(BASE_API_PATH + '/player/all/:idPlayer', (req, res) => {
         console.log('-------> GET /player/all');
-        var uuid = req.query._id;
+        var uuid = req.params.idPlayer;
         if(!uuid){
             res.sendStatus(400);
         }else{
@@ -205,10 +206,17 @@ playersAPI.register = function (app) {
                             console.log(Date() + " - " + err);
                             res.sendStatus(500);
                         } else {
-                            player.team = team;
-                            //FALTA POR INTEGRARSE CON TRANSFERS
-                            res.statusCode = 200;
-                            res.send(player);
+                            TeamResource.getPlayerTransfers(player._id)
+                            .then((tranfers)=>{
+                                player.team = team;
+                                player.transfer = tranfers;
+                                res.statusCode = 200;
+                                res.send(player);
+                            })
+                            .catch((err)=>{
+                                console.log("error: "+ err);
+                                response.sendStatus(500);
+                            });
                         }
                     });
                 }
