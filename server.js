@@ -2,7 +2,6 @@ const express = require('express');
 const bodyParser = require('body-parser');
 var jwt = require('jsonwebtoken');
 
-const Player = require('./playersAPI/model/players');
 /*Creamos variables para la ejecución de la API teams*/
 const teamsAPI = require('./teamsAPI/v1/index');
 /*Creamos variables para la ejecución de la API teams*/
@@ -35,7 +34,7 @@ function validateUser(req, res, next) {
 teamsAPI.register(app);
 
 /*Ejecución de playersAPI*/
-playersAPI.register(app, Player);
+playersAPI.register(app);
 
 /*Exportamos el servidor*/
 module.exports = app;

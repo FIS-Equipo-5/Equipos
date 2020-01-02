@@ -1,18 +1,7 @@
 const app = require('../server.js');
-const db = require('../db.js'); /////////// NONO BORRA ESTA LÍNEA CUANDO ADAPTES LOS TEST A MONGO
 const Team = require('../teamsAPI/module/teams');
+const Player = require('../playersAPI/model/players');
 const request = require('supertest');
-
-describe("Hello world tests", ()=>{
-
-    it("Should do a stupid test", ()=>{
-        const a = 5;
-        const b = 3;
-        const sum = a + b;
-
-        expect(sum).toBe(8);
-    });
-});
 
 describe("Teams API", ()=>{
 
@@ -359,16 +348,16 @@ describe("Teams API", ()=>{
 
 
 });
-/*
+
 describe("Players API", () => {
     describe("GET /players", () => {
         beforeAll(() => {
             const players = [
-                { "uuid": 1, "player_name": "K. Mbappé", "firstname": "Kylian", "lastname": "Mbappé Lottin", "position": "Attacker", "nationality": "France", "value": 600000, "team_id": 85, "goals": { "total": 33, "assists": 7 }, "cards": { "yellow": 5, "red": 1 }, "_id": "DPQwdkT8XS58fDWH" },
-                { "uuid": 2, "player_name": "Sergio", "firstname": "Ramos", "lastname": "Rodriguez", "position": "Attacker", "nationality": "Spain", "value": 7000000, "team_id": 31, "goals": { "total": 48, "assists": 51 }, "cards": { "yellow": 21, "red": 12 }, "_id": "DPQwdkTG4JJUFO9E" }
+                { "_id": 1, "player_name": "K. Mbappé", "firstname": "Kylian", "lastname": "Mbappé Lottin", "position": "Attacker", "nationality": "France", "value": 600000, "team_id": 85, "goals": { "total": 33, "assists": 7 }, "cards": { "yellow": 5, "red": 1 }, "_id": "DPQwdkT8XS58fDWH" },
+                { "_id": 2, "player_name": "Sergio", "firstname": "Ramos", "lastname": "Rodriguez", "position": "Attacker", "nationality": "Spain", "value": 7000000, "team_id": 31, "goals": { "total": 48, "assists": 51 }, "cards": { "yellow": 21, "red": 12 }, "_id": "DPQwdkTG4JJUFO9E" }
             ]
 
-            dbFind = jest.spyOn(db.playerDB, "find");
+            dbFind = jest.spyOn(Player, "find");
             dbFind.mockImplementation((query, callback) => {
                 callback(null, players);
             });
@@ -387,16 +376,16 @@ describe("Players API", () => {
     });
 
     describe("POST /players", () => {
-        var dbInsert;
-        var player = player = { "uuid": 1, "player_name": "K. Mbappé", "firstname": "Kylian", "lastname": "Mbappé Lottin", "position": "Attacker", "nationality": "France", "value": 600000, "team_id": 85, "goals": { "total": 33, "assists": 7 }, "cards": { "yellow": 5, "red": 1 } };
+        let dbInsert;
+        const player = new Player({"_id": "5e0e2b8a85d4450d529ea758", "player_name": "K. Mbappé", "firstname": "Kylian", "lastname": "Mbappé Lottin", "position": "Attacker", "nationality": "France", "value": 600000, "team_id": 85, "goals": { "total": 33, "assists": 7 }, "cards": { "yellow": 5, "red": 1 } });
 
         beforeEach(() => {
-            dbInsert = jest.spyOn(db.playerDB, "insert");
+            dbInsert = jest.spyOn(Player, "create");
         });
 
         it("POST /players 201", () => {
             dbInsert.mockImplementation((playerQueryInsert, callback) => {
-                callback(false);
+                callback(false, player);
             });
 
             return request(app).post("/api/v1/players").send(player).then((response) => {
@@ -407,7 +396,7 @@ describe("Players API", () => {
 
         it("POST /players 500", () => {
             dbInsert.mockImplementation((playerQueryInsert, callback) => {
-                callback(true);
+                callback(true, null);
             });
 
             return request(app).post("/api/v1/players").send(player).then((response) => {
@@ -416,51 +405,50 @@ describe("Players API", () => {
         });
     });
 
-    describe("GET /player", () => {
-        beforeAll(() => {
-            const player = { "uuid": 1, "player_name": "K. Mbappé", "firstname": "Kylian", "lastname": "Mbappé Lottin", "position": "Attacker", "nationality": "France", "value": 600000, "team_id": 85, "goals": { "total": 33, "assists": 7 }, "cards": { "yellow": 5, "red": 1 }, "_id": "DPQwdkT8XS58fDWH" }
+    // describe("GET /player", () => {
+    //     beforeAll(() => {
+    //         const player = { "uuid": 1, "player_name": "K. Mbappé", "firstname": "Kylian", "lastname": "Mbappé Lottin", "position": "Attacker", "nationality": "France", "value": 600000, "team_id": 85, "goals": { "total": 33, "assists": 7 }, "cards": { "yellow": 5, "red": 1 }, "_id": "DPQwdkT8XS58fDWH" }
 
-            dbFind = jest.spyOn(db.playerDB, "find");
-            dbFind.mockImplementation((query, callback) => {
-                callback(null, player);
-            });
+    //         dbFind = jest.spyOn(db.playerDB, "find");
+    //         dbFind.mockImplementation((query, callback) => {
+    //             callback(null, player);
+    //         });
 
-        });
+    //     });
 
-        it("GET /player 200", () => {
-            return request(app).get("/api/v1/player").then((response) => {
-                expect(response.status).toBe(200);
-                expect(response.type).toEqual(expect.stringContaining("json"));
-                expect(dbFind).toBeCalledWith({ uuid: player.uuid }, expect.any(Function));
-            });
-        });
+    //     it("GET /player 200", () => {
+    //         return request(app).get("/api/v1/player").then((response) => {
+    //             expect(response.status).toBe(200);
+    //             expect(response.type).toEqual(expect.stringContaining("json"));
+    //             expect(dbFind).toBeCalledWith({ uuid: player.uuid }, expect.any(Function));
+    //         });
+    //     });
 
-        it("GET /player 400", () => {
-            return request(app).get("/api/v1/player").then((response) => {
-                expect(response.status).toBe(400);
-                expect(dbFind).toBeCalledWith({ uuid: null }, expect.any(Function));
-            });
-        });
-    });
+    //     it("GET /player 400", () => {
+    //         return request(app).get("/api/v1/player").then((response) => {
+    //             expect(response.status).toBe(400);
+    //             expect(dbFind).toBeCalledWith({ uuid: null }, expect.any(Function));
+    //         });
+    //     });
+    // });
 
-    describe("PUT /player", () => {
-        beforeAll(() => {
-            const player = { "uuid": 1, "player_name": "K. Mbappé", "firstname": "Kylian", "lastname": "Mbappé Lottin", "position": "Attacker", "nationality": "France", "value": 600000, "team_id": 85, "goals": { "total": 33, "assists": 7 }, "cards": { "yellow": 5, "red": 1 } };
-            dbUpdate = jest.spyOn(db.playerDB, "update");
+    // describe("PUT /player", () => {
+    //     beforeAll(() => {
+    //         const player = { "uuid": 1, "player_name": "K. Mbappé", "firstname": "Kylian", "lastname": "Mbappé Lottin", "position": "Attacker", "nationality": "France", "value": 600000, "team_id": 85, "goals": { "total": 33, "assists": 7 }, "cards": { "yellow": 5, "red": 1 } };
+    //         dbUpdate = jest.spyOn(db.playerDB, "update");
 
-            dbUpdate.mockImplementation((filter, object, callback) => {
-                callback(null, player);
-            });
-        });
+    //         dbUpdate.mockImplementation((filter, object, callback) => {
+    //             callback(null, player);
+    //         });
+    //     });
 
-        it("PUT /player 200", () => {
-            return request(app).put("/api/v1/player").send(player).then((response) => {
-                expect(response.statusCode).toBe(200);
-                expect(response.type).toEqual(expect.stringContaining("json"));
-                expect(Array.isArray(response.body)).toBe(false);
-                expect(dbUpdate).toBeCalledWith({uuid: player.id}, player, expect.any(Function));
-            });
-        });
-    });
+    //     it("PUT /player 200", () => {
+    //         return request(app).put("/api/v1/player").send(player).then((response) => {
+    //             expect(response.statusCode).toBe(200);
+    //             expect(response.type).toEqual(expect.stringContaining("json"));
+    //             expect(Array.isArray(response.body)).toBe(false);
+    //             expect(dbUpdate).toBeCalledWith({uuid: player.id}, player, expect.any(Function));
+    //         });
+    //     });
+    // });
 });
-*/
