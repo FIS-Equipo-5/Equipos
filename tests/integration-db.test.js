@@ -1,4 +1,4 @@
-const Team = require('../teamsAPI/module/teams');
+const Team = require('../teamsAPI/model/teams');
 const mongoose = require('mongoose');
 const dbConnect = require('../db');
 
