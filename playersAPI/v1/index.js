@@ -1,9 +1,11 @@
+const Player = require('../model/players');
+const Team = require('../../teamsAPI/module/teams');
 var playersAPI = {};
 var BASE_API_PATH = "/api/v1";
 
 module.exports = playersAPI;
 
-playersAPI.register = function (app, Player) {
+playersAPI.register = function (app) {
 
     app.get(BASE_API_PATH + '/players', (req, res) => {
         console.log('-------> GET /players');
@@ -22,7 +24,7 @@ playersAPI.register = function (app, Player) {
         console.log('-------> POST /players');
         var player = new Player(req.body);
         if (validatePlayer(player, true)) {
-            player.save((err, result) => {
+            Player.create(player, (err, result) => {
                 if(err){
                     console.log(Date() + " - " + err);
                     res.sendStatus(500);
@@ -189,33 +191,43 @@ playersAPI.register = function (app, Player) {
 
     app.get(BASE_API_PATH + '/player/all', (req, res) => {
         console.log('-------> GET /player/all');
-        var uuid = req.query.uuid;
+        var uuid = req.query._id;
         if(!uuid){
             res.sendStatus(400);
         }else{
-            playerDB.find({uuid : uuid}, function (err, data) {
+            Player.findOne({_id : uuid}, function (err, player) {
                 if (err) {
                     console.log(Date() + " - " + err);
                     res.sendStatus(500);
                 } else {
-                    //Llamada a la BD de teams a y la api de Transfer
+                    Team.findOne({team_id : player.team_id}, function (err, team) {
+                        if (err) {
+                            console.log(Date() + " - " + err);
+                            res.sendStatus(500);
+                        } else {
+                            player.team = team;
+                            //FALTA POR INTEGRARSE CON TRANSFERS
+                            res.statusCode = 200;
+                            res.send(player);
+                        }
+                    });
                 }
-            });
+            }).lean();
         }
     });
 
     app.get(BASE_API_PATH + '/player/team', (req, res) => {
         console.log('-------> GET /player/team');
-        var uuid = parseInt(req.query.uuid);
+        var uuid = req.query._id;
         if(!uuid){
             res.sendStatus(400);
         }else{
-            playerDB.findOne({uuid : uuid}, function (err, player) {
+            Player.findOne({_id : uuid}, function (err, player) {
                 if (err) {
                     console.log(Date() + " - " + err);
                     res.sendStatus(500);
                 } else {
-                    teamBD.findOne({team_id : player.team_id}, function (err, team) {
+                    Team.findOne({team_id : player.team_id}, function (err, team) {
                         if (err) {
                             console.log(Date() + " - " + err);
                             res.sendStatus(500);
@@ -226,7 +238,7 @@ playersAPI.register = function (app, Player) {
                         }
                     });
                 }
-            });
+            }).lean();
         }
     });
 }
