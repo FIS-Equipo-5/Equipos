@@ -1,4 +1,4 @@
-const Team = require('../module/teams');
+const Team = require('../model/teams');
 const teamsAPI={};
 const BASE_API_PATH="/api/v1";
 
@@ -199,7 +199,7 @@ app.get(BASE_API_PATH + "/teams/team/:team_id", (req,res)=>{
 function validateTeam(team){
     var attributes = [];
     var message = "";
-    if(Object.keys(team).length <= 13){
+    if(Object.keys(team).length <= 14){
         if(!team.team_id){
             console.log("Atribute id required and not specified!");
             attributes.push("id");

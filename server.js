@@ -14,21 +14,21 @@ app.use(bodyParser.json());
 app.set('secretKey', 'authServiceApi'); 
 
 //jwt token is checked for all our routes
-//app.use('/', validateUser);
+app.use('/', validateUser);
 
 //Function that validates jwt token
 function validateUser(req, res, next) {
-    jwt.verify(req.headers['x-access-token'], req.app.get('secretKey'), function(err, decoded) {
-      if (err) {
-        res.json({status:"error", message: err.message, data:null});
-      }else{
-        // add user id to request
-        req.body.userId = decoded.id;
-        next();
-      }
-    });
-    
-  }
+  jwt.verify(req.headers['x-access-token'], req.app.get('secretKey'), function(err, decoded) {
+    if (err) {
+      res.json({status:"error", message: err.message, data:null});
+    }else{
+      // add user id to request
+      req.body.userId = decoded.id;
+      next();
+    }
+  });
+  
+}
 
 /*Ejecución de teamsAPI*/
 teamsAPI.register(app);
