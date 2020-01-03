@@ -1,6 +1,6 @@
 const Player = require('../model/players');
 const Team = require('../../teamsAPI/model/teams');
-const TeamResource = require('../../integrations/TeamsResource');
+const TransferResource = require('../../integrations/TransferResource');
 var playersAPI = {};
 var BASE_API_PATH = "/api/v1";
 
@@ -35,17 +35,17 @@ playersAPI.register = function (app) {
                 }
             });
         } else {
-            res.send(400);
+            res.sendStatus(400);
         }
     });
 
-    app.get(BASE_API_PATH + '/player', (req, res) => {
+    app.get(BASE_API_PATH + '/player/:idPlayer', (req, res) => {
         console.log('-------> GET /player');
-        var uuid = req.query._id;
+        var uuid = req.params.idPlayer;
         if (!uuid) {
-            res.send(400);
+            res.sendStatus(400);
         } else {
-            Player.find({ _id: uuid }, function (err, data) {
+            Player.findById(uuid, function (err, data) {
                 if (err) {
                     console.log(Date() + " - " + err);
                     res.sendStatus(500);
@@ -83,7 +83,7 @@ playersAPI.register = function (app) {
         console.log('-------> DELETE /player');
         var uuid = req.body._id;
         if (!uuid) {
-            res.send(400);
+            res.sendStatus(400);
         } else {
             Player.deleteOne({ _id: uuid }, (err, result) => {
                 if (err) {
@@ -107,7 +107,7 @@ playersAPI.register = function (app) {
         var uuid = req.body._id;
         var value = req.body.value;
         if (!uuid) {
-            res.send(400);
+            res.sendStatus(400);
         } else {
             Player.updateOne({ _id: uuid }, { value: value }, (err, result) => {
                 if (err) {
@@ -193,6 +193,7 @@ playersAPI.register = function (app) {
     app.get(BASE_API_PATH + '/player/all/:idPlayer', (req, res) => {
         console.log('-------> GET /player/all');
         var uuid = req.params.idPlayer;
+        let token = request.headers['x-access-token'];
         if(!uuid){
             res.sendStatus(400);
         }else{
@@ -206,7 +207,7 @@ playersAPI.register = function (app) {
                             console.log(Date() + " - " + err);
                             res.sendStatus(500);
                         } else {
-                            TeamResource.getPlayerTransfers(player._id)
+                            TransferResource.getPlayerTransfers(player._id, token)
                             .then((tranfers)=>{
                                 player.team = team;
                                 player.transfer = tranfers;
