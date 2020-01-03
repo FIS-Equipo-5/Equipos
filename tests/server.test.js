@@ -405,32 +405,31 @@ describe("Players API", () => {
         });
     });
 
-    // describe("GET /player", () => {
-    //     beforeAll(() => {
-    //         const player = { "uuid": 1, "player_name": "K. Mbappé", "firstname": "Kylian", "lastname": "Mbappé Lottin", "position": "Attacker", "nationality": "France", "value": 600000, "team_id": 85, "goals": { "total": 33, "assists": 7 }, "cards": { "yellow": 5, "red": 1 }, "_id": "DPQwdkT8XS58fDWH" }
+    describe("GET /player", () => {
+        beforeAll(() => {
+            const player = { "_id": "DPQwdkT8XS58fDWH", "player_name": "K. Mbappé", "firstname": "Kylian", "lastname": "Mbappé Lottin", "position": "Attacker", "nationality": "France", "value": 600000, "team_id": 85, "goals": { "total": 33, "assists": 7 }, "cards": { "yellow": 5, "red": 1 }};
+            dbFind = jest.spyOn(Player, "find");
+            dbFind.mockImplementation((query, callback) => {
+                callback(null, player);
+            });
 
-    //         dbFind = jest.spyOn(db.playerDB, "find");
-    //         dbFind.mockImplementation((query, callback) => {
-    //             callback(null, player);
-    //         });
+        });
 
-    //     });
+        it("GET /player 200", () => {
+            return request(app).get("/api/v1/player").then((response) => {
+                expect(response.status).toBe(200);
+                expect(response.type).toEqual(expect.stringContaining("json"));
+                expect(dbFind).toBeCalledWith({ _id: player._id }, expect.any(Function));
+            });
+        });
 
-    //     it("GET /player 200", () => {
-    //         return request(app).get("/api/v1/player").then((response) => {
-    //             expect(response.status).toBe(200);
-    //             expect(response.type).toEqual(expect.stringContaining("json"));
-    //             expect(dbFind).toBeCalledWith({ uuid: player.uuid }, expect.any(Function));
-    //         });
-    //     });
-
-    //     it("GET /player 400", () => {
-    //         return request(app).get("/api/v1/player").then((response) => {
-    //             expect(response.status).toBe(400);
-    //             expect(dbFind).toBeCalledWith({ uuid: null }, expect.any(Function));
-    //         });
-    //     });
-    // });
+        it("GET /player 400", () => {
+            return request(app).get("/api/v1/player").then((response) => {
+                expect(response.status).toBe(400);
+                expect(dbFind).toBeCalledWith({ _id: Object }, expect.any(Function));
+            });
+        });
+    });
 
     // describe("PUT /player", () => {
     //     beforeAll(() => {

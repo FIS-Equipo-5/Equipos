@@ -246,9 +246,6 @@ playersAPI.register = function (app) {
 
 function validatePlayer(player, isNew) {
     var valid = true;
-    if ((isNew && player.id) || (!isNew && !player.id)) {
-        valid = true;
-    }
 
     if (!player.firstname) {
         valid = false;
