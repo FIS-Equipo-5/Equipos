@@ -457,7 +457,7 @@ describe("Players API", () => {
                 callback(false,"id");
             });
 
-            let result = {nModified: 1};
+            let result = {nModified: 1, ok: 1};
             
             let dbUpdate = jest.spyOn(Player, "updateOne");
             dbUpdate.mockImplementation((filter, object, callback) => {
