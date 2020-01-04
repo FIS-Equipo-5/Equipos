@@ -380,106 +380,96 @@ describe("Teams API", ()=>{
 
 });
 
-// describe("Players API", () => {
-//     describe("GET /players", () => {
-//         beforeAll(() => {
-//             const players = [
-//                 { "_id": 1, "player_name": "K. Mbappé", "firstname": "Kylian", "lastname": "Mbappé Lottin", "position": "Attacker", "nationality": "France", "value": 600000, "team_id": 85, "goals": { "total": 33, "assists": 7 }, "cards": { "yellow": 5, "red": 1 }, "_id": "DPQwdkT8XS58fDWH" },
-//                 { "_id": 2, "player_name": "Sergio", "firstname": "Ramos", "lastname": "Rodriguez", "position": "Attacker", "nationality": "Spain", "value": 7000000, "team_id": 31, "goals": { "total": 48, "assists": 51 }, "cards": { "yellow": 21, "red": 12 }, "_id": "DPQwdkTG4JJUFO9E" }
-//             ]
+describe("Players API", () => {
+    describe("GET /players", () => {
+        beforeAll(() => {
+            const players = [
+                { "_id": "5e0e2b8a85d4450d529ea758", "player_name": "K. Mbappé", "firstname": "Kylian", "lastname": "Mbappé Lottin", "position": "Attacker", "nationality": "France", "value": 600000, "team_id": 85, "goals": { "total": 33, "assists": 7 }, "cards": { "yellow": 5, "red": 1 }},
+                { "_id": "5e0e2b8a85d4450d529ea758", "player_name": "Sergio", "firstname": "Ramos", "lastname": "Rodriguez", "position": "Attacker", "nationality": "Spain", "value": 7000000, "team_id": 31, "goals": { "total": 48, "assists": 51 }, "cards": { "yellow": 21, "red": 12 }}
+            ]
 
-//             dbFind = jest.spyOn(Player, "find");
-//             dbFind.mockImplementation((query, callback) => {
-//                 callback(null, players);
-//             });
+            token = jest.spyOn(jwt, "verify");
+            token.mockImplementation((token,secret,callback)=>{
+                callback(false,"id");
+            });
 
-//         });
+            dbFind = jest.spyOn(Player, "find");
+            dbFind.mockImplementation((query, callback) => {
+                callback(null, players);
+            });
 
-//         it("GET /players 200", () => {
-//             return request(app).get("/api/v1/players").then((response) => {
-//                 expect(response.status).toBe(200);
-//                 expect(response.type).toEqual(expect.stringContaining("json"));
-//                 expect(Array.isArray(response.body)).toBe(true);
-//                 expect(response.body).toBeArrayOfSize(2);
-//                 expect(dbFind).toBeCalledWith({}, expect.any(Function));
-//             });
-//         });
-//     });
+        });
 
-//     describe("POST /players", () => {
-//         let dbInsert;
-//         const player = new Player({"_id": "5e0e2b8a85d4450d529ea758", "player_name": "K. Mbappé", "firstname": "Kylian", "lastname": "Mbappé Lottin", "position": "Attacker", "nationality": "France", "value": 600000, "team_id": 85, "goals": { "total": 33, "assists": 7 }, "cards": { "yellow": 5, "red": 1 } });
+        it("GET /players 200", () => {
+            return request(app).get("/api/v1/players").then((response) => {
+                expect(response.status).toBe(200);
+                expect(response.type).toEqual(expect.stringContaining("json"));
+                expect(Array.isArray(response.body)).toBe(true);
+                expect(response.body).toBeArrayOfSize(2);
+                expect(dbFind).toBeCalledWith({}, expect.any(Function));
+            });
+        });
+    });
 
-//         beforeEach(() => {
-//             dbInsert = jest.spyOn(Player, "create");
-//         });
+    describe("POST /players", () => {
+        let dbInsert;
+        let token;
+        const player = new Player({"_id": "5e0e2b8a85d4450d529ea758", "player_name": "K. Mbappé", "firstname": "Kylian", "lastname": "Mbappé Lottin", "position": "Attacker", "nationality": "France", "value": 600000, "team_id": 85, "goals": { "total": 33, "assists": 7 }, "cards": { "yellow": 5, "red": 1 } });
 
-//         it("POST /players 201", () => {
-//             dbInsert.mockImplementation((playerQueryInsert, callback) => {
-//                 callback(false, player);
-//             });
+        beforeEach(() => {
 
-//             return request(app).post("/api/v1/players").send(player).then((response) => {
-//                 expect(response.status).toBe(201);
-//                 expect(dbInsert).toBeCalledWith(player, expect.any(Function));
-//             });
-//         });
+            token = jest.spyOn(jwt, "verify");
+            token.mockImplementation((token,secret,callback)=>{
+                callback(false,"id");
+            });
 
-//         it("POST /players 500", () => {
-//             dbInsert.mockImplementation((playerQueryInsert, callback) => {
-//                 callback(true, null);
-//             });
+            dbInsert = jest.spyOn(Player, "create");
+        });
 
-//             return request(app).post("/api/v1/players").send(player).then((response) => {
-//                 expect(response.status).toBe(500);
-//             });
-//         });
-//     });
+        it("POST /players 201", () => {
+            dbInsert.mockImplementation((playerQueryInsert, callback) => {
+                callback(false, player);
+            });
 
-//     // describe("GET /player", () => {
-//     //     beforeAll(() => {
-//     //         const player = { "uuid": 1, "player_name": "K. Mbappé", "firstname": "Kylian", "lastname": "Mbappé Lottin", "position": "Attacker", "nationality": "France", "value": 600000, "team_id": 85, "goals": { "total": 33, "assists": 7 }, "cards": { "yellow": 5, "red": 1 }, "_id": "DPQwdkT8XS58fDWH" }
+            return request(app).post("/api/v1/players").send(player).then((response) => {
+                expect(response.status).toBe(201);
+                expect(dbInsert).toBeCalledWith(player, expect.any(Function));
+            });
+        });
 
-//     //         dbFind = jest.spyOn(db.playerDB, "find");
-//     //         dbFind.mockImplementation((query, callback) => {
-//     //             callback(null, player);
-//     //         });
+        it("POST /players 500", () => {
+            dbInsert.mockImplementation((playerQueryInsert, callback) => {
+                callback(true, null);
+            });
 
-//     //     });
+            return request(app).post("/api/v1/players").send(player).then((response) => {
+                expect(response.status).toBe(500);
+            });
+        });
+    });
 
-//     //     it("GET /player 200", () => {
-//     //         return request(app).get("/api/v1/player").then((response) => {
-//     //             expect(response.status).toBe(200);
-//     //             expect(response.type).toEqual(expect.stringContaining("json"));
-//     //             expect(dbFind).toBeCalledWith({ uuid: player.uuid }, expect.any(Function));
-//     //         });
-//     //     });
+    describe("PUT /player", () => {
+        it("PUT /player 200", () => {
+            const player = new Player({ "_id": "5e0e2b8a85d4450d529ea758", "player_name": "K. Mbappé", "firstname": "Kylian", "lastname": "Mbappé Lottin", "position": "Attacker", "nationality": "France", "value": 600000, "team_id": 85, "goals": { "total": 33, "assists": 7 }, "cards": { "yellow": 5, "red": 1 } });
+            
+            let token = jest.spyOn(jwt, "verify");
+            token.mockImplementation((token,secret,callback)=>{
+                callback(false,"id");
+            });
 
-//     //     it("GET /player 400", () => {
-//     //         return request(app).get("/api/v1/player").then((response) => {
-//     //             expect(response.status).toBe(400);
-//     //             expect(dbFind).toBeCalledWith({ uuid: null }, expect.any(Function));
-//     //         });
-//     //     });
-//     // });
+            let result = {nModified: 1};
+            
+            let dbUpdate = jest.spyOn(Player, "updateOne");
+            dbUpdate.mockImplementation((filter, object, callback) => {
+                callback(null, result);
+            });
 
-//     // describe("PUT /player", () => {
-//     //     beforeAll(() => {
-//     //         const player = { "uuid": 1, "player_name": "K. Mbappé", "firstname": "Kylian", "lastname": "Mbappé Lottin", "position": "Attacker", "nationality": "France", "value": 600000, "team_id": 85, "goals": { "total": 33, "assists": 7 }, "cards": { "yellow": 5, "red": 1 } };
-//     //         dbUpdate = jest.spyOn(db.playerDB, "update");
-
-//     //         dbUpdate.mockImplementation((filter, object, callback) => {
-//     //             callback(null, player);
-//     //         });
-//     //     });
-
-//     //     it("PUT /player 200", () => {
-//     //         return request(app).put("/api/v1/player").send(player).then((response) => {
-//     //             expect(response.statusCode).toBe(200);
-//     //             expect(response.type).toEqual(expect.stringContaining("json"));
-//     //             expect(Array.isArray(response.body)).toBe(false);
-//     //             expect(dbUpdate).toBeCalledWith({uuid: player.id}, player, expect.any(Function));
-//     //         });
-//     //     });
-//     // });
-// });
+            return request(app).put("/api/v1/player").send(player).then((response) => {
+                expect(response.statusCode).toBe(200);
+                expect(response.type).toEqual(expect.stringContaining("json"));
+                expect(Array.isArray(response.body)).toBe(false);
+                expect(dbUpdate).toBeCalledWith({_id: player._id}, player, expect.any(Function));
+            });
+        });
+    });
+});

@@ -61,7 +61,7 @@ playersAPI.register = function (app) {
         console.log('-------> PUT /player');
         var player = new Player(req.body);
         if (validatePlayer(player, false)) {
-            Player.where({ _id: player._id }).update(player, (err, result) => {
+            Player.updateOne({_id: player._id}, player, (err, result) => {
                 if (err) {
                     console.log(Date() + " - " + err);
                     res.sendStatus(500);
@@ -79,9 +79,9 @@ playersAPI.register = function (app) {
         }
     });
 
-    app.delete(BASE_API_PATH + '/player', (req, res) => {
+    app.delete(BASE_API_PATH + '/player/:idPlayer', (req, res) => {
         console.log('-------> DELETE /player');
-        var uuid = req.body._id;
+        var uuid = req.params.idPlayer;
         if (!uuid) {
             res.sendStatus(400);
         } else {
@@ -193,7 +193,7 @@ playersAPI.register = function (app) {
     app.get(BASE_API_PATH + '/player/all/:idPlayer', (req, res) => {
         console.log('-------> GET /player/all');
         var uuid = req.params.idPlayer;
-        let token = request.headers['x-access-token'];
+        let token = req.headers['x-access-token'];
         if(!uuid){
             res.sendStatus(400);
         }else{
@@ -225,9 +225,9 @@ playersAPI.register = function (app) {
         }
     });
 
-    app.get(BASE_API_PATH + '/player/team', (req, res) => {
+    app.get(BASE_API_PATH + '/player/team/:idPlayer', (req, res) => {
         console.log('-------> GET /player/team');
-        var uuid = req.query._id;
+        var uuid = req.params.idPlayer;
         if(!uuid){
             res.sendStatus(400);
         }else{
@@ -255,9 +255,6 @@ playersAPI.register = function (app) {
 
 function validatePlayer(player, isNew) {
     var valid = true;
-    if ((isNew && player.id) || (!isNew && !player.id)) {
-        valid = true;
-    }
 
     if (!player.firstname) {
         valid = false;
