@@ -66,7 +66,7 @@ playersAPI.register = function (app) {
                     console.log(Date() + " - " + err);
                     res.sendStatus(500);
                 } else {
-                    if (result.nModified == 1) {
+                    if (result.ok == 1) {
                         res.statusCode = 200;
                         res.send(player);
                     } else {
@@ -262,6 +262,10 @@ playersAPI.register = function (app) {
 function validatePlayer(player, isNew) {
     var valid = true;
 
+    if(isNew && player._id || !isNew && !player._id){
+        valid = false;
+    }
+
     if (!player.firstname) {
         valid = false;
     }
@@ -278,23 +282,23 @@ function validatePlayer(player, isNew) {
         valid = false;
     }
 
-    if (!player.value || player.value < 0) {
+    if (player.value == null || isNaN(player.value) || player.value < 0) {
         valid = false;
     }
 
-    if (!player.goals.total || player.goals.total < 0) {
+    if (player.goals.total == null || isNaN(player.goals.total) || player.goals.total < 0) {
         valid = false;
     }
 
-    if (!player.goals.assists || player.goals.assists < 0) {
+    if (player.goals.assists == null || isNaN(player.goals.assists) || player.goals.assists < 0) {
+        valid = false;
+    }
+    
+    if (player.cards.yellow == null || isNaN(player.cards.yellow) || player.cards.yellow < 0) {
         valid = false;
     }
 
-    if (!player.cards.yellow || player.cards.yellow < 0) {
-        valid = false;
-    }
-
-    if (!player.cards.red || player.cards.red < 0) {
+    if (player.cards.red == null || isNaN(player.cards.red) || player.cards.red < 0) {
         valid = false;
     }
 
