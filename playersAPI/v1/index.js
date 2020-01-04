@@ -61,7 +61,7 @@ playersAPI.register = function (app) {
         console.log('-------> PUT /player');
         var player = new Player(req.body);
         if (validatePlayer(player, false)) {
-            Player.where({ _id: player._id }).update(player, (err, result) => {
+            Player.updateOne({_id: player._id}, player, (err, result) => {
                 if (err) {
                     console.log(Date() + " - " + err);
                     res.sendStatus(500);
