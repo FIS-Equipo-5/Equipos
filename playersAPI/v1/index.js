@@ -197,15 +197,21 @@ playersAPI.register = function (app) {
         if(!uuid){
             res.sendStatus(400);
         }else{
-            Player.findOne({_id : uuid}, function (err, player) {
+            Player.findById(uuid, function (err, player) {
                 if (err) {
                     console.log(Date() + " - " + err);
                     res.sendStatus(500);
+                } else if (player===null){
+                    console.log(Date() + " - " + err);
+                    res.status(404).json({err: "Player " + uuid + " not found"});
                 } else {
                     Team.findOne({team_id : player.team_id}, function (err, team) {
                         if (err) {
                             console.log(Date() + " - " + err);
                             res.sendStatus(500);
+                        } else if (team===null){
+                            console.log(Date() + " - " + err);
+                            res.status(404).json({err: "Team " + player.team_id + " not found"});
                         } else {
                             TransferResource.getPlayerTransfers(player._id, token)
                             .then((tranfers)=>{

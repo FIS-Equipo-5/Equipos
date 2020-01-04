@@ -1,5 +1,6 @@
 const app = require('./server');
 const dbConnect = require('./db');
+const LoadInitialData = require('./data/loadInitialData');
 
 const port = (process.env.PORT || 3000);
 
@@ -9,6 +10,10 @@ dbConnect().then(
     () => {
         app.listen(port);
         console.log("Server ready!");
+        
+        /*Load initial data*/
+        LoadInitialData();
+        
         /*Documentación Swagger*/
         const expressSwagger = require('express-swagger-generator')(app);
         let options = {
