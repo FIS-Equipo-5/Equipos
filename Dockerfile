@@ -7,6 +7,7 @@ COPY package-lock.json .
 RUN npm install
 
 COPY docs ./docs
+COPY data ./data
 COPY integrations ./integrations
 COPY teamsAPI ./teamsAPI
 COPY playersAPI ./playersAPI
