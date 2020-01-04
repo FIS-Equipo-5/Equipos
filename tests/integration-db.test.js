@@ -1,4 +1,5 @@
 const Team = require('../teamsAPI/model/teams');
+const Player = require('../playersAPI/model/players');
 const mongoose = require('mongoose');
 const dbConnect = require('../db');
 
@@ -167,6 +168,154 @@ describe('Teams DB connection', () =>{
                 Team.findOne({name: team.name}, (err,searchedTeam)=>{
                     expect(err).toBeNull();
                     expect(searchedTeam).toBeNull();
+                    done();
+                });
+            });
+        });
+    });
+
+    afterAll((done) => {
+        mongoose.connection.db.dropDatabase(()=>{
+            mongoose.connection.close(done);
+        });
+    });
+
+});
+
+describe('Players DB connection', () =>{
+
+    beforeAll(()=>{
+        return dbConnect();
+    });
+
+    beforeEach((done)=>{
+        Player.deleteMany({}, (err) => {
+            done();
+        });
+    });
+
+    it('Writes a player in the DB', (done)=>{
+        const player = new Player(
+            {
+                "player_name": "K. Mbappé", 
+                "firstname": "Kylian", 
+                "lastname": "Mbappé Lottin", 
+                "position": "Attacker", 
+                "nationality": "France", 
+                "value": 600000, 
+                "team_id": 1313, 
+                "goals": { 
+                    "total": 33, 
+                    "assists": 7 
+                }, 
+                "cards": { 
+                    "yellow": 5, 
+                    "red": 1 
+                } 
+            });
+        player.save((err,player)=>{
+            expect(err).toBeNull();
+            Player.find({}, (err,players)=>{
+                expect(err).toBeNull();
+                expect(players).toBeArrayOfSize(1);
+                expect(players[0].player_name).toEqualCaseInsensitive("K. Mbappé");
+                done();
+            });
+        });
+    });
+
+    it('Returns the searched player ', (done)=>{
+        const player = new Player(
+            {
+                "player_name": "K. Mbappé", 
+                "firstname": "Kylian", 
+                "lastname": "Mbappé Lottin", 
+                "position": "Attacker", 
+                "nationality": "France", 
+                "value": 600000, 
+                "team_id": 1313, 
+                "goals": { 
+                    "total": 33, 
+                    "assists": 7 
+                }, 
+                "cards": { 
+                    "yellow": 5, 
+                    "red": 1 
+                } 
+            });
+        player.save((err, playerSaved)=>{
+            expect(err).toBeNull();
+            Player.findOne({_id: playerSaved._id}, (err,searchedPlayer)=>{
+                expect(err).toBeNull();
+                expect(searchedPlayer.player_name).toEqualCaseInsensitive("K. Mbappé");
+                done();
+            });
+        });
+    });
+
+
+    it('Updates a player ', (done)=>{
+        const player = new Player(
+            {
+                "player_name": "K. Mbappé", 
+                "firstname": "Kylian", 
+                "lastname": "Mbappé Lottin", 
+                "position": "Attacker", 
+                "nationality": "France", 
+                "value": 600000, 
+                "team_id": 1313, 
+                "goals": { 
+                    "total": 33, 
+                    "assists": 7 
+                }, 
+                "cards": { 
+                    "yellow": 5, 
+                    "red": 1 
+                } 
+            });
+        
+        player.save((err, playerSaved)=>{
+            expect(err).toBeNull();
+            playerSaved.value = 700000;
+            Player.updateOne({_id: playerSaved._id}, playerSaved, (err,result)=>{
+                expect(err).toBeNull();
+                expect(result['n']).toBe(1);
+                Player.findOne({_id: player._id}, (err,searchedPlayer)=>{
+                    expect(err).toBeNull();
+                    expect(searchedPlayer.value).toBe(700000);
+                    done();
+                });
+            });
+        });
+    });
+
+    it('Deletes one player', (done)=>{
+        const player = new Player(
+            {
+                "player_name": "K. Mbappé", 
+                "firstname": "Kylian", 
+                "lastname": "Mbappé Lottin", 
+                "position": "Attacker", 
+                "nationality": "France", 
+                "value": 600000, 
+                "team_id": 1313, 
+                "goals": { 
+                    "total": 33, 
+                    "assists": 7 
+                }, 
+                "cards": { 
+                    "yellow": 5, 
+                    "red": 1 
+                } 
+            });
+        player.save((err, playerSaved)=>{
+            expect(err).toBeNull();
+            Player.deleteOne({_id: playerSaved._id}, (err, result)=>{
+                expect(err).toBeNull();
+                expect(result['deletedCount']).toBe(1);
+                Player.findOne({_id: playerSaved._id}, (err, searchedPlayer)=>{
+                    expect(err).toBeNull();
+                    expect(searchedPlayer).toBeNull();
                     done();
                 });
             });
