@@ -16,10 +16,14 @@ app.use(cors());
 app.set('secretKey', 'authServiceApi'); 
 
 //jwt token is checked for all our routes
-app.use('/', validateUser);
+app.use('/api', validateUser);
 
 //Function that validates jwt token
 function validateUser(req, res, next) {
+  if (req.path.includes('api-docs')){
+    next();
+    return
+  }
   jwt.verify(req.headers['x-access-token'], req.app.get('secretKey'), function(err, decoded) {
     if (err) {
       res.json({status:"error", message: err.message, data:null});

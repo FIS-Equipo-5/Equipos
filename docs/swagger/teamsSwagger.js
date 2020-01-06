@@ -20,6 +20,7 @@
  * @route GET /teams
  * @group Teams - Operations about Teams
  * @returns {Array.<Team>} 200 - An array of teams info
+ * @security JWT
  * @returns {Error}  500 - Unexpected error
  */
 
@@ -32,14 +33,11 @@
  * @produces application/json
  * @consumes application/json
  * @returns {Team.model} 201 - The team created
+ * @security JWT
  * @returns {Error}  400 - Bad Request
  * @returns {Error}  500 - Unexpected error
  */
-/*
- * @headers {integer} 200.X-Rate-Limit - calls per hour allowed by the user
- * @headers {string} 200.X-Expires-After - 	date in UTC when token expires
- * @security JWT
- */
+
 
 
  /**
@@ -47,6 +45,7 @@
  * @route DELETE /teams
  * @group Teams - Operations about Teams
  * @returns {object} 204 - No content
+ * @security JWT
  * @returns {Error}  500 - Unexpected error
  */
 
@@ -56,6 +55,7 @@
  * @group Teams - Operations about Teams
  * @param {string} team_name.path.required - team name - eg: Real Betis
  * @returns {Team.model} 200 - Requested team
+ * @security JWT
  * @returns {object} 404 - Not Found
  * @returns {Error}  500 - Unexpected error
  */
@@ -67,6 +67,7 @@
  * @group Teams - Operations about Teams
  * @param {string} team_name.path.required - team name - eg: Real Betis
  * @returns {object} 200 - Succesfully updated
+ * @security JWT
  * @returns {Error}  404 - Not Found
  * @returns {Error}  400 - Bad Request
  * @returns {Error}  500 - Unexpected error
@@ -78,6 +79,7 @@
  * @group Teams - Operations about Teams
  * @param {string} team_name.path.required - team name - eg: Real Betis
  * @returns {object} 204 - No content
+ * @security JWT
  * @returns {Error}  404 - Not Found
  * @returns {Error}  500 - Unexpected error
  */
@@ -88,6 +90,7 @@
  * @group Teams - Operations about Teams
  * @param {string} team_id.path.required - team identifier - eg: 123
  * @returns {Team.model} 200 - Requested team
+ * @security JWT
  * @returns {Error}  404 - Not Found
  * @returns {Error}  500 - Unexpected error
  */
