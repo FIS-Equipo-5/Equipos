@@ -13,6 +13,8 @@ dbConnect().then(
         
         /*Load initial data*/
         LoadInitialData();
+
+        const HOST = process.env.SWAGGER_HOST || 'localhost:3000';
         
         /*Documentación Swagger*/
         const expressSwagger = require('express-swagger-generator')(app);
@@ -23,21 +25,21 @@ dbConnect().then(
                     title: 'Teams API',
                     version: '1.0.0',
                 },
-                host: 'localhost:3000',
+                host: HOST,
                 basePath: '/api/v1',
                 produces: [
                     "application/json"
                 ],
                 schemes: ['http', 'https'],
                 securityDefinitions: {
-                   /*
+                   
                     JWT: {
                         type: 'apiKey',
                         in: 'header',
-                        name: 'Authorization',
+                        name: 'x-access-token',
                         description: "",
                     }
-                    */
+                    
                 }
             },
             basedir: __dirname, //app absolute path
