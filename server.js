@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 var jwt = require('jsonwebtoken');
 
 /*Creamos variables para la ejecución de la API teams*/
@@ -9,6 +10,7 @@ var playersAPI = require('./playersAPI/v1/index');
 
 var app = express();
 app.use(bodyParser.json());
+app.use(cors());
 
 /*jwt secret token*/
 app.set('secretKey', 'authServiceApi'); 
