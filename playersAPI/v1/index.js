@@ -209,9 +209,6 @@ playersAPI.register = function (app) {
                         if (err) {
                             console.log(Date() + " - " + err);
                             res.sendStatus(500);
-                        } else if (team===null){
-                            console.log(Date() + " - " + err);
-                            res.status(404).json({err: "Team " + player.team_id + " not found"});
                         } else {
                             TransferResource.getPlayerTransfers(player._id, token)
                             .then((tranfers)=>{
