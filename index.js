@@ -12,7 +12,7 @@ dbConnect().then(
         console.log("Server ready!");
         
         /*Load initial data*/
-        LoadInitialData();
+        // LoadInitialData();
 
         const HOST = process.env.SWAGGER_HOST || 'localhost:3000';
         
