@@ -1,0 +1,380 @@
+{
+	"info": {
+		"_postman_id": "efb0d0b7-c851-45f9-8db6-1fbde017cf0d",
+		"name": "Proyecto",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Player",
+			"item": [
+				{
+					"name": "POST /players",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "x-access-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlMGY4MTU3NGVjM2IwMDAwZjdlZDUwYSIsImlhdCI6MTU3ODE0NDk0NSwiZXhwIjoxNTc4MTQ4NTQ1fQ.i9NFD9EIoruuLed0_UC16V7agw7g3YUP-opgK157_AE",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n                    \"player_name\":\"Sergio\",\n                    \"firstname\":\"Ramos\",\n                    \"lastname\":\"Rodriguez\",\n                    \"position\":\"Attacker\",\n                    \"nationality\":\"Spain\",\n                    \"value\":7000000,\n                    \"team_id\":1313,\n                    \"goals\":\n                        {\n                            \"total\":48,\n                            \"assists\":51\n                        },\n                    \"cards\":\n                        {\n                            \"yellow\":21,\n                            \"red\":12\n                        }\n                }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/v1/players",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"players"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET /players",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlMGY4MTU3NGVjM2IwMDAwZjdlZDUwYSIsImlhdCI6MTU3ODI4MDY0MCwiZXhwIjoxNTc4Mjg0MjQwfQ.4FDsXZknmjKpCpd3xi5IZPKbOADONjDgGcJPD0ld6TA",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/api/v1/players",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"players"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET /player/{idPlayer}",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlMGY4MTU3NGVjM2IwMDAwZjdlZDUwYSIsImlhdCI6MTU3ODE0NDk0NSwiZXhwIjoxNTc4MTQ4NTQ1fQ.i9NFD9EIoruuLed0_UC16V7agw7g3YUP-opgK157_AE",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/api/v1/player/5e1094f089977e00b0bd04bc",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"player",
+								"5e1094f089977e00b0bd04bc"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT /player",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "x-access-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlMGY4MTU3NGVjM2IwMDAwZjdlZDUwYSIsImlhdCI6MTU3ODE0NDk0NSwiZXhwIjoxNTc4MTQ4NTQ1fQ.i9NFD9EIoruuLed0_UC16V7agw7g3YUP-opgK157_AE",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"goals\": {\n            \"total\": 48,\n            \"assists\": 51\n        },\n        \"cards\": {\n            \"yellow\": 1,\n            \"red\": 0\n        },\n        \"_id\": \"5e1094f089977e00b0bd04bc\",\n        \"player_name\": \"Sergio\",\n        \"firstname\": \"Ramos\",\n        \"lastname\": \"Rodriguez\",\n        \"position\": \"Attacker\",\n        \"nationality\": \"Spain\",\n        \"value\": 7000000,\n        \"team_id\": 1313,\n        \"__v\": 0\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/v1/player",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"player"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE /player/{idPlayer}",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "x-access-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlMGY4MTU3NGVjM2IwMDAwZjdlZDUwYSIsImlhdCI6MTU3ODA3NDU2OSwiZXhwIjoxNTc4MDc4MTY5fQ.shfjkOgzznjg9vsNqy7G7MAPVjj6kHF4wmT8Neho0PY",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/v1/player/5e0f83518f68a107439f7d08",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"player",
+								"5e0f83518f68a107439f7d08"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT /player/value",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "x-access-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlMGY4MTU3NGVjM2IwMDAwZjdlZDUwYSIsImlhdCI6MTU3ODA3NDU2OSwiZXhwIjoxNTc4MDc4MTY5fQ.shfjkOgzznjg9vsNqy7G7MAPVjj6kHF4wmT8Neho0PY",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"_id\":\"5e0f83518f68a107439f7d08\",\n\t\"value\":99999992\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/v1/player/value",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"player",
+								"value"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT /player/goals",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "x-access-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlMGY4MTU3NGVjM2IwMDAwZjdlZDUwYSIsImlhdCI6MTU3ODA3NDU2OSwiZXhwIjoxNTc4MDc4MTY5fQ.shfjkOgzznjg9vsNqy7G7MAPVjj6kHF4wmT8Neho0PY",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"_id\":\"5e0f83518f68a107439f7d08\",\n\t\"goals\":-50\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/v1/player/goals",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"player",
+								"goals"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT /player/cards",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "x-access-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlMGY4MTU3NGVjM2IwMDAwZjdlZDUwYSIsImlhdCI6MTU3ODA3NDU2OSwiZXhwIjoxNTc4MDc4MTY5fQ.shfjkOgzznjg9vsNqy7G7MAPVjj6kHF4wmT8Neho0PY",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"_id\":\"5e0f83518f68a107439f7d08\",\n\t\"cards\":{\n\t\t\"red\":2,\n\t\t\"yellow\":61\n\t\t\n\t}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/v1/player/cards",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"player",
+								"cards"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET /player/team/{idPlayer}",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlMGY4MTU3NGVjM2IwMDAwZjdlZDUwYSIsImlhdCI6MTU3ODA3NDU2OSwiZXhwIjoxNTc4MDc4MTY5fQ.shfjkOgzznjg9vsNqy7G7MAPVjj6kHF4wmT8Neho0PY",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/api/v1/player/team/5e0f83518f68a107439f7d08",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"player",
+								"team",
+								"5e0f83518f68a107439f7d08"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET /player/all/{idPlayer}",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlMGY4MTU3NGVjM2IwMDAwZjdlZDUwYSIsImlhdCI6MTU3ODA3NDU2OSwiZXhwIjoxNTc4MDc4MTY5fQ.shfjkOgzznjg9vsNqy7G7MAPVjj6kHF4wmT8Neho0PY",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/api/v1/player/all/5e0f83518f68a107439f7d08",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"player",
+								"all",
+								"5e0f83518f68a107439f7d08"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
